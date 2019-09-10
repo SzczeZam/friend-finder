@@ -26,7 +26,7 @@
                       <hr class="my-4">
                       <div class="form-group">
                           <div class="form-header"><h4>About You</h4></div>
-                          <label for="Name">Name:</label>
+                          <label for="name">Name:</label>
                           <input type="name" class="form-control" id="name" placeholder="Totally Normal Names Go Here">
                       </div>
                       <div class="form-group">
@@ -165,13 +165,70 @@
                                     <option value="5">5 (strongly agree)</option>
                                   </select>
                         </div>
-                        <button id="formButt" class="btn btn-primary submit">Submit</button>
+                        <button id="formBtn" class="btn btn-primary submit">Submit</button>
                         
                     </form>
                 </div>
         </div>
     </div>
 
+      
+      <!-- Modal -->
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="match-name"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    <script type="text/javascript">
+      $("#formBtn").on("click", function () {
+          event.preventDefault();
+          var newRes = {
+              name: $("#name").val().trim(),
+              phone: $("#link").val().trim(),
+              scores: [
+                $("#A1").val().trim(),
+                $("#A2").val().trim(),
+                $("#A3").val().trim(),
+                $("#A4").val().trim(),
+                $("#A5").val().trim(),
+                $("#A6").val().trim(),
+                $("#A7").val().trim(),
+                $("#A8").val().trim(),
+                $("#A9").val().trim(),
+                $("#A10").val().trim(),
+                ] 
+          }
+​
+          $.post("/api/friends", newRes)
+              .then(function (data) {
+                $("#match-name").text(data.name)
+                
+                $('#modal').modul('show')
+              });
+​
+          $("#name").val("");
+          $("#link").val("");
+
+      })
+​
+  </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
